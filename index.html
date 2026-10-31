@@ -1,0 +1,424 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise For You</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: Georgia, serif;
+    color: white;
+    background:
+        radial-gradient(ellipse at 50% 100%, #43245e 0%, transparent 55%),
+        linear-gradient(160deg, #080b20, #17102f 55%, #241333);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Stars */
+#stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: 0.2; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1.5); }
+}
+
+/* Main content */
+.container {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 520px;
+    text-align: center;
+    padding: 25px;
+}
+
+.small-title {
+    color: #e6c8ff;
+    letter-spacing: 5px;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    animation: fadeIn 2s ease;
+}
+
+h1 {
+    font-size: clamp(32px, 7vw, 48px);
+    font-weight: normal;
+    line-height: 1.25;
+    margin-bottom: 15px;
+    text-shadow: 0 0 25px #d9a7ff66;
+}
+
+.subtitle {
+    color: #d6c8e8;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+}
+
+/* Envelope */
+.envelope-area {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 35px;
+    perspective: 1000px;
+}
+
+.envelope {
+    position: relative;
+    width: 260px;
+    height: 170px;
+    cursor: pointer;
+    background: #b77cae;
+    border-radius: 5px;
+    box-shadow: 0 15px 45px #0008, 0 0 35px #e8a9ff22;
+    transition: transform 0.4s;
+}
+
+.envelope:hover {
+    transform: translateY(-8px);
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #d49ac8;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 4;
+}
+
+.envelope.open::before {
+    transform: rotateX(180deg);
+}
+
+.envelope::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #9e629d;
+    clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+    z-index: 3;
+}
+
+.letter {
+    position: absolute;
+    left: 10%;
+    top: 12%;
+    width: 80%;
+    height: 75%;
+    background: #fff6ed;
+    color: #71456e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 3px;
+    z-index: 2;
+    transition: transform 0.9s ease;
+}
+
+.letter span:first-child {
+    font-size: 28px;
+}
+
+.letter span:last-child {
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.envelope.open .letter {
+    transform: translateY(-115px);
+    z-index: 5;
+}
+
+.seal {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #743d75;
+    color: #ffe3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 6;
+    box-shadow: 0 3px 10px #0003;
+    transition: opacity 0.4s;
+}
+
+.envelope.open .seal {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.instruction {
+    font-size: 13px;
+    color: #e9c9f2;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: 0.45; }
+}
+
+.message {
+    display: none;
+    margin-top: 25px;
+    animation: fadeIn 1.2s ease;
+}
+
+.message.show {
+    display: block;
+}
+
+.message h2 {
+    font-weight: normal;
+    font-size: 27px;
+    margin-bottom: 12px;
+    color: #f5d5ff;
+}
+
+.message p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #e4d5ef;
+}
+
+.next {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 13px 27px;
+    border: 1px solid #e8c0f5;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.next:hover {
+    background: #e8c0f5;
+    color: #26142f;
+    box-shadow: 0 0 25px #e8c0f566;
+}
+
+.footer {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #bda8cf;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    .subtitle {
+        margin-bottom: 40px;
+    }
+
+    .envelope {
+        width: 230px;
+        height: 150px;
+    }
+
+    .envelope.open .letter {
+        transform: translateY(-100px);
+    }
+
+    .footer {
+        font-size: 9px;
+    }
+}
+</style>
+</head>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Music Button -->
+<button id="musicButton" onclick="toggleMusic()">
+    ♫ Play Music
+</button>
+
+<style>
+#musicButton {
+    position: fixed;
+    bottom: 22px;
+    right: 20px;
+    z-index: 9999;
+    padding: 12px 18px;
+    border: 1px solid #e8c0f5;
+    border-radius: 30px;
+    background: rgba(30, 15, 45, 0.85);
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+#musicButton:hover {
+    background: #e8c0f5;
+    color: #26142f;
+}
+</style>
+
+<script>
+const music = document.getElementById("bgMusic");
+const musicButton = document.getElementById("musicButton");
+
+music.volume = 0.35;
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play().then(() => {
+            musicButton.innerHTML = "♫ Music On";
+        }).catch(() => {
+            musicButton.innerHTML = "♫ Tap to Play";
+        });
+    } else {
+        music.pause();
+        musicButton.innerHTML = "♫ Play Music";
+    }
+}
+</script>
+
+<body>
+
+<div id="stars"></div>
+
+<main class="container">
+
+    <div class="small-title">A little something awaits</div>
+
+    <h1>Some Surprises<br>Are Worth Waiting For ✨</h1>
+
+    <p class="subtitle">
+        Somewhere between yesterday and today,<br>
+        someone prepared a little surprise for you.
+    </p>
+
+    <div class="envelope-area">
+        <div class="envelope" id="envelope" onclick="openEnvelope()">
+
+            <div class="letter">
+                <span>💌</span>
+                <span>A LITTLE INVITATION</span>
+            </div>
+
+            <div class="seal">♥</div>
+
+        </div>
+    </div>
+
+    <p class="instruction" id="instruction">
+        ✦ TAP THE ENVELOPE TO OPEN ✦
+    </p>
+
+    <section class="message" id="message">
+        <h2>You Are Invited! 🌷</h2>
+
+        <p>
+            This isn't an ordinary webpage.<br>
+            It's a little journey filled with memories,<br>
+            smiles, wishes and a special celebration.
+        </p>
+
+        <a href="garden.html" class="next">
+            Begin Your Journey →
+        </a>
+    </section>
+
+</main>
+
+<div class="footer">
+    MADE WITH A LITTLE MAGIC ✦
+</div>
+
+<script>
+// Create stars
+const starContainer = document.getElementById("stars");
+
+for (let i = 0; i < 100; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    star.style.animationDuration = (1 + Math.random() * 3) + "s";
+
+    starContainer.appendChild(star);
+}
+
+// Open envelope
+let opened = false;
+
+function openEnvelope() {
+    if (opened) return;
+
+    opened = true;
+
+    const envelope = document.getElementById("envelope");
+    const message = document.getElementById("message");
+    const instruction = document.getElementById("instruction");
+
+    envelope.classList.add("open");
+    instruction.style.display = "none";
+
+    setTimeout(() => {
+        message.classList.add("show");
+    }, 1000);
+}
+</script>
+
+</body>
+</html>

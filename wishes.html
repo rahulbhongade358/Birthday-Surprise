@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little World of Happiness 💗</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    background: linear-gradient(160deg,#171633,#34234f,#53365f);
+}
+
+.sky {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    color: #fff5cf;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%,100% { opacity:.25; transform:scale(.7); }
+    50% { opacity:1; transform:scale(1.4); }
+}
+
+.moon {
+    position: absolute;
+    top: 65px;
+    right: 12%;
+    width: 85px;
+    height: 85px;
+    background: #fff0c5;
+    border-radius: 50%;
+    box-shadow: 0 0 35px #fff0c588,0 0 90px #fff0c544;
+}
+
+.moon:after {
+    content:"";
+    position:absolute;
+    width:75px;
+    height:75px;
+    top:-10px;
+    left:20px;
+    border-radius:50%;
+    background:#292044;
+}
+
+header {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 65px 15px 15px;
+}
+
+.small-title {
+    color:#f5c9ed;
+    font-size:10px;
+    letter-spacing:5px;
+    margin-bottom:17px;
+}
+
+h1 {
+    font-family:'Pacifico',cursive;
+    font-size:clamp(32px,7vw,60px);
+    font-weight:400;
+    color:#fff0ee;
+    text-shadow:0 0 25px #f8b9e8;
+}
+
+.subtitle {
+    margin-top:13px;
+    color:#e9d8f0;
+    font-size:13px;
+    line-height:1.9;
+}
+
+.scene {
+    position:relative;
+    z-index:2;
+    max-width:850px;
+    min-height:420px;
+    margin:30px auto 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:clamp(5px,3vw,35px);
+    padding:20px 12px;
+}
+
+.character {
+    position:relative;
+    text-align:center;
+    animation:float 3s ease-in-out infinite;
+}
+
+.girl {
+    font-size:clamp(100px,22vw,165px);
+    filter:drop-shadow(0 10px 22px #ffb7ed55);
+    animation:giggle 4s ease-in-out infinite;
+}
+
+@keyframes giggle {
+    0%,90%,100% { transform:rotate(0); }
+    93% { transform:rotate(-5deg); }
+    96% { transform:rotate(5deg); }
+}
+
+.teddy {
+    font-size:clamp(65px,14vw,105px);
+    filter:drop-shadow(0 8px 15px #ffc1a655);
+    animation:float 3.5s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-15px); }
+}
+
+.character-name {
+    font-size:11px;
+    color:#fbd9f1;
+    margin-top:8px;
+    letter-spacing:2px;
+}
+
+.heart {
+    position:absolute;
+    top:0;
+    right:5px;
+    font-size:30px;
+    animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform:scale(1); }
+    50% { transform:scale(1.3); }
+}
+
+.ground {
+    position:absolute;
+    bottom:20px;
+    left:10%;
+    width:80%;
+    height:45px;
+    border-radius:50%;
+    background:#e9a9ee19;
+    filter:blur(15px);
+}
+
+.chocolates {
+    position:relative;
+    z-index:3;
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+    padding:20px;
+}
+
+.choco {
+    border:1px solid #ffffff25;
+    background:#ffffff10;
+    border-radius:20px;
+    padding:13px 18px;
+    font-size:34px;
+    cursor:pointer;
+    transition:.3s;
+    animation:float 3s infinite ease-in-out;
+    backdrop-filter:blur(8px);
+}
+
+.choco:nth-child(2) { animation-delay:.5s; }
+.choco:nth-child(3) { animation-delay:1s; }
+
+.choco:hover {
+    transform:translateY(-10px) scale(1.12);
+    background:#ffffff25;
+}
+
+.hint {
+    text-align:center;
+    color:#e5c9e9;
+    font-size:11px;
+    letter-spacing:2px;
+    padding:15px;
+}
+
+.envelope-area {
+    position:relative;
+    z-index:3;
+    text-align:center;
+    padding:30px 15px 65px;
+}
+
+.envelope {
+    position:relative;
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:170px;
+    height:115px;
+    margin:15px auto;
+    background:#f5b9d9;
+    border-radius:8px;
+    cursor:pointer;
+    box-shadow:0 12px 35px #08051c88;
+    transition:.3s;
+}
+
+.envelope:hover {
+    transform:translateY(-8px) scale(1.04);
+}
+
+.envelope:before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#e995c4;
+    clip-path:polygon(0 0,50% 58%,100% 0);
+    z-index:2;
+    transform-origin:top;
+    transition:transform .7s;
+}
+
+.envelope.open:before {
+    transform:rotateX(180deg);
+}
+
+.envelope:after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#f9cbe2;
+    clip-path:polygon(0 100%,50% 48%,100% 100%);
+    z-index:3;
+}
+
+.seal {
+    position:relative;
+    z-index:4;
+    font-size:30px;
+    filter:drop-shadow(0 2px 5px #b55b8c);
+}
+
+.envelope-label {
+    color:#ffe0f1;
+    font-size:12px;
+    letter-spacing:2px;
+    margin-top:12px;
+}
+
+.modal {
+    position:fixed;
+    inset:0;
+    z-index:20;
+    background:#090719dd;
+    backdrop-filter:blur(12px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transition:.4s;
+}
+
+.modal.active {
+    opacity:1;
+    visibility:visible;
+}
+
+.letter {
+    width:min(430px,100%);
+    max-height:85vh;
+    overflow-y:auto;
+    padding:35px 27px;
+    text-align:center;
+    border-radius:22px;
+    background:linear-gradient(145deg,#fff1e9,#f6d9ed);
+    color:#593b5a;
+    box-shadow:0 0 70px #f5b5e766;
+    transform:translateY(30px) scale(.9);
+    transition:.5s;
+}
+
+.modal.active .letter {
+    transform:translateY(0) scale(1);
+}
+
+.letter-icon {
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.letter h2 {
+    font-family:'Pacifico',cursive;
+    font-size:28px;
+    font-weight:400;
+    margin-bottom:20px;
+    color:#a44e83;
+}
+
+.letter p {
+    font-size:14px;
+    line-height:2;
+    color:#634d67;
+}
+
+.close {
+    margin-top:25px;
+    border:0;
+    background:#a85d91;
+    color:white;
+    border-radius:25px;
+    padding:12px 27px;
+    cursor:pointer;
+    font-family:inherit;
+}
+
+.navigation {
+    position:relative;
+    z-index:3;
+    text-align:center;
+    padding:10px 15px 40px;
+}
+
+.navigation a {
+    display:inline-block;
+    text-decoration:none;
+    color:#ffe2f3;
+    border:1px solid #e9bde777;
+    border-radius:30px;
+    padding:12px 25px;
+    font-size:12px;
+    transition:.3s;
+}
+
+.navigation a:hover {
+    background:#ffffff20;
+}
+
+footer {
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:20px;
+    color:#c6afd0;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.particle {
+    position:fixed;
+    z-index:1;
+    pointer-events:none;
+    animation:rise 7s linear infinite;
+    opacity:.7;
+}
+
+@keyframes rise {
+    from { transform:translateY(100vh) rotate(0); opacity:0; }
+    20% { opacity:.8; }
+    to { transform:translateY(-100px) rotate(180deg); opacity:0; }
+}
+
+@media(max-width:550px) {
+    header { padding-top:50px; }
+    .scene { min-height:320px; gap:0; }
+    .girl { font-size:115px; }
+    .teddy { font-size:70px; }
+    .moon { width:60px;height:60px; }
+    .moon:after { width:55px;height:55px; }
+    .chocolates { gap:12px; }
+    .choco { padding:12px; }
+}
+</style>
+</head>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Music Button -->
+<button id="musicButton" onclick="toggleMusic()">
+    ♫ Play Music
+</button>
+
+<style>
+#musicButton {
+    position: fixed;
+    bottom: 22px;
+    right: 20px;
+    z-index: 9999;
+    padding: 12px 18px;
+    border: 1px solid #e8c0f5;
+    border-radius: 30px;
+    background: rgba(30, 15, 45, 0.85);
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+#musicButton:hover {
+    background: #e8c0f5;
+    color: #26142f;
+}
+</style>
+
+<script>
+const music = document.getElementById("bgMusic");
+const musicButton = document.getElementById("musicButton");
+
+music.volume = 0.35;
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play().then(() => {
+            musicButton.innerHTML = "♫ Music On";
+        }).catch(() => {
+            musicButton.innerHTML = "♫ Tap to Play";
+        });
+    } else {
+        music.pause();
+        musicButton.innerHTML = "♫ Play Music";
+    }
+}
+</script>
+
+<body>
+
+<div class="sky" id="sky">
+    <div class="moon"></div>
+</div>
+
+<header>
+    <div class="small-title">A LITTLE WORLD MADE WITH LOVE</div>
+    <h1>A Little World of Happiness</h1>
+    <p class="subtitle">
+        A tiny girl, a teddy, some chocolates<br>
+        and a little surprise waiting just for you. 💗
+    </p>
+</header>
+
+<main>
+
+<section class="scene">
+
+    <div class="ground"></div>
+
+    <div class="character">
+        <div class="girl">👧🏻</div>
+        <div class="character-name">LITTLE DREAMER</div>
+    </div>
+
+    <div class="character">
+        <div class="teddy">🧸</div>
+        <div class="heart">💗</div>
+        <div class="character-name">TEDDY FRIEND</div>
+    </div>
+
+</section>
+
+<p class="hint">✦ A FEW SWEET THINGS FOR YOU ✦</p>
+
+<section class="chocolates">
+
+    <button class="choco" onclick="openSweet(0)" aria-label="Chocolate gift">🍫</button>
+
+    <button class="choco" onclick="openSweet(1)" aria-label="Candy gift">🍬</button>
+
+    <button class="choco" onclick="openSweet(2)" aria-label="Sweet gift">🍩</button>
+
+</section>
+
+<section class="envelope-area">
+
+    <p class="hint">AND THERE IS ONE LAST LITTLE SURPRISE...</p>
+
+    <div class="envelope" id="envelope" onclick="openLetter()">
+        <div class="seal">💌</div>
+    </div>
+
+    <p class="envelope-label">A SECRET LETTER JUST FOR YOU</p>
+
+</section>
+
+</main>
+
+<div class="navigation">
+    <a href="garden.html">← Back to the Magical Garden</a>
+</div>
+<div class="navigation">
+   <a href="letter.html" class="nav-link">Read a Little Letter →</a>
+</div>
+
+<footer>
+    CREATED WITH LITTLE MOMENTS OF MAGIC ✨
+</footer>
+
+<div class="modal" id="modal" onclick="outsideClose(event)">
+    <div class="letter">
+
+        <div class="letter-icon" id="letterIcon">💗</div>
+
+        <h2 id="letterTitle">A Little Surprise</h2>
+
+        <p id="letterText"></p>
+
+        <button class="close" onclick="closeModal()">Close with a smile ♡</button>
+
+    </div>
+</div>
+
+<script>
+
+// Create magical stars
+const sky = document.getElementById("sky");
+
+for(let i=0;i<100;i++) {
+    const star = document.createElement("div");
+    star.className="star";
+    star.textContent = Math.random() > .5 ? "✦" : "·";
+    star.style.left=Math.random()*100+"%";
+    star.style.top=Math.random()*100+"%";
+    star.style.fontSize=(Math.random()*12+5)+"px";
+    star.style.animationDelay=Math.random()*4+"s";
+    sky.appendChild(star);
+}
+
+// Floating particles
+for(let i=0;i<18;i++) {
+    const particle=document.createElement("div");
+    particle.className="particle";
+    particle.textContent=["✨","♡","✦"][i%3];
+    particle.style.left=Math.random()*100+"%";
+    particle.style.animationDelay=Math.random()*8+"s";
+    particle.style.animationDuration=(Math.random()*6+6)+"s";
+    document.body.appendChild(particle);
+}
+
+const modal=document.getElementById("modal");
+
+function showMessage(icon,title,message) {
+    document.getElementById("letterIcon").textContent=icon;
+    document.getElementById("letterTitle").textContent=title;
+    document.getElementById("letterText").textContent=message;
+    modal.classList.add("active");
+}
+
+function openSweet(index) {
+
+    const messages=[
+        "A little chocolate for someone who deserves all the sweetness in the world. May your life always be full of beautiful moments! 🍫",
+        "Sending you a little sweetness, a little laughter and a whole lot of happiness. Keep smiling! 🍬",
+        "Life is like a box of sweets. May you always find something wonderful waiting around the corner! 🍩"
+    ];
+
+    showMessage("🍬","Something Sweet!",messages[index]);
+}
+
+function openLetter() {
+
+    const envelope=document.getElementById("envelope");
+    envelope.classList.add("open");
+
+    setTimeout(()=>{
+        showMessage(
+            "💌",
+            "A Little Letter For You",
+            "Hey! Just wanted to remind you that you deserve all the happiness, laughter and beautiful things this world has to offer. May your journey ahead be filled with wonderful surprises, lovely memories and dreams coming true. Keep smiling, keep growing and never stop being yourself. Wishing you a beautiful birthday and an even more beautiful year ahead! 💗"
+        );
+    },500);
+}
+
+function closeModal() {
+    modal.classList.remove("active");
+}
+
+function outsideClose(event) {
+    if(event.target===modal) closeModal();
+}
+
+document.addEventListener("keydown",event=>{
+    if(event.key==="Escape") closeModal();
+});
+
+</script>
+
+</body>
+</html>
