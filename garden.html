@@ -1,515 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A Garden of Little Things</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#171637">
+<title>A Garden of Little Things</title>
 
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap");
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        min-height: 100vh;
-        overflow-x: hidden;
-        background: linear-gradient(180deg, #090d24, #171637, #251b43);
-        color: white;
-        font-family: "Poppins", sans-serif;
-      }
-
-      .stars,
-      .fireflies {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
-      .star {
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        background: white;
-        border-radius: 50%;
-        animation: twinkle 3s infinite ease-in-out;
-      }
-
-      @keyframes twinkle {
-        0%,
-        100% {
-          opacity: 0.2;
-          transform: scale(0.7);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.5);
-        }
-      }
-
-      .firefly {
-        position: absolute;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: #fff4a8;
-        box-shadow: 0 0 12px 4px #ffe99b;
-        animation: fly 9s infinite ease-in-out alternate;
-      }
-
-      @keyframes fly {
-        0% {
-          transform: translate(0, 0);
-          opacity: 0.2;
-        }
-        50% {
-          opacity: 1;
-        }
-        100% {
-          transform: translate(80px, -100px);
-          opacity: 0.3;
-        }
-      }
-
-      header {
-        text-align: center;
-        padding: 65px 20px 25px;
-        position: relative;
-        z-index: 2;
-      }
-
-      .tag {
-        font-size: 10px;
-        letter-spacing: 5px;
-        color: #e5c8ff;
-        margin-bottom: 18px;
-      }
-
-      h1 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(42px, 8vw, 75px);
-        font-weight: 400;
-        color: #fff1e9;
-        text-shadow: 0 0 25px #d7a9ff77;
-      }
-
-      .subtitle {
-        margin-top: 15px;
-        color: #d4c7e8;
-        font-size: 13px;
-        line-height: 1.9;
-        font-weight: 300;
-      }
-
-      .garden {
-        position: relative;
-        z-index: 2;
-        width: min(900px, 94%);
-        margin: 35px auto 60px;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 30px 15px;
-      }
-
-      .flower-card {
-        min-height: 155px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        cursor: pointer;
-        border: 1px solid #ffffff12;
-        border-radius: 18px;
-        background: #ffffff08;
-        backdrop-filter: blur(8px);
-        transition: 0.4s;
-        animation: appear 0.9s both;
-      }
-
-      .flower-card:hover {
-        transform: translateY(-9px);
-        background: #ffffff15;
-        border-color: #f5c9ff66;
-        box-shadow: 0 0 30px #c68cff25;
-      }
-
-      @keyframes appear {
-        from {
-          opacity: 0;
-          transform: translateY(25px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .flower {
-        font-size: 53px;
-        filter: drop-shadow(0 0 15px #e7b8ff99);
-        animation: bloom 3s infinite ease-in-out;
-      }
-
-      @keyframes bloom {
-        0%,
-        100% {
-          transform: scale(0.95) rotate(-5deg);
-        }
-        50% {
-          transform: scale(1.12) rotate(5deg);
-        }
-      }
-
-      .flower-name {
-        margin-top: 13px;
-        font-size: 11px;
-        letter-spacing: 1px;
-        color: #e8d5fa;
-      }
-
-      .hint {
-        text-align: center;
-        color: #b8a9d2;
-        font-size: 11px;
-        letter-spacing: 2px;
-        margin: 0 0 35px;
-      }
-
-      footer {
-        text-align: center;
-        padding: 25px;
-        color: #a99abf;
-        font-size: 11px;
-        letter-spacing: 1px;
-      }
-
-      .modal {
-        position: fixed;
-        inset: 0;
-        background: #050617d9;
-        backdrop-filter: blur(12px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        z-index: 10;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.4s;
-      }
-
-      .modal.active {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .letter {
-        position: relative;
-        max-width: 450px;
-        width: 100%;
-        padding: 45px 30px;
-        border: 1px solid #e9c8ff55;
-        border-radius: 22px;
-        background: linear-gradient(145deg, #282044, #17172f);
-        text-align: center;
-        box-shadow: 0 0 70px #b48aff33;
-        transform: translateY(25px) scale(0.95);
-        transition: 0.4s;
-      }
-
-      .modal.active .letter {
-        transform: translateY(0) scale(1);
-      }
-
-      .letter-icon {
-        font-size: 48px;
-        margin-bottom: 20px;
-      }
-
-      .letter h2 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 34px;
-        font-weight: 500;
-        color: #f8d8ff;
-        margin-bottom: 18px;
-      }
-
-      .letter p {
-        color: #e4d9ed;
-        font-size: 14px;
-        line-height: 2;
-        font-weight: 300;
-      }
-
-      .close {
-        margin-top: 28px;
-        background: transparent;
-        border: 1px solid #e8caff77;
-        color: #f5dcff;
-        padding: 11px 28px;
-        border-radius: 30px;
-        cursor: pointer;
-        font-family: inherit;
-        transition: 0.3s;
-      }
-
-      .close:hover {
-        background: #ffffff18;
-      }
-
-      .next {
-        display: inline-block;
-        margin: 0 auto 50px;
-        text-decoration: none;
-        color: #f6dfff;
-        border: 1px solid #d9b4ff66;
-        padding: 13px 28px;
-        border-radius: 30px;
-        font-size: 12px;
-        letter-spacing: 1px;
-        transition: 0.3s;
-      }
-
-      .next:hover {
-        background: #ffffff18;
-        box-shadow: 0 0 25px #c69bff44;
-      }
-
-      .next-wrap {
-        text-align: center;
-      }
-
-      @media (max-width: 600px) {
-        header {
-          padding-top: 45px;
-        }
-        .garden {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 13px;
-          margin-top: 30px;
-        }
-        .flower-card {
-          min-height: 145px;
-        }
-        .flower {
-          font-size: 45px;
-        }
-        .subtitle {
-          font-size: 12px;
-        }
-        .letter {
-          padding: 35px 23px;
-        }
-      }
-    </style>
-  </head>
-
-<!-- Background Music -->
-<audio id="bgMusic" loop>
-    <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Music Button -->
-<button id="musicButton" onclick="toggleMusic()">
-    ♫ Play Music
-</button>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 
 <style>
-#musicButton {
+.fireflies {
     position: fixed;
-    bottom: 22px;
-    right: 20px;
-    z-index: 9999;
-    padding: 12px 18px;
-    border: 1px solid #e8c0f5;
-    border-radius: 30px;
-    background: rgba(30, 15, 45, 0.85);
-    color: white;
-    font-size: 13px;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.firefly {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #fff4a8;
+    box-shadow: 0 0 12px 4px #ffe99b;
+    animation: fly 9s infinite ease-in-out alternate;
+}
+
+@keyframes fly {
+    0% { transform: translate(0, 0); opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { transform: translate(60px, -90px); opacity: 0.3; }
+}
+
+.garden {
+    width: 100%;
+    max-width: 880px;
+    margin: 2rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.flower-card {
+    min-height: 150px;
+    padding: 16px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: inherit;
+    font: inherit;
     cursor: pointer;
-    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeUp 0.8s ease backwards;
+    -webkit-tap-highlight-color: transparent;
 }
 
-#musicButton:hover {
-    background: #e8c0f5;
-    color: #26142f;
+.flower-card:active {
+    transform: scale(0.96);
 }
-</style>
 
-<script>
-const music = document.getElementById("bgMusic");
-const musicButton = document.getElementById("musicButton");
-
-music.volume = 0.35;
-
-function toggleMusic() {
-    if (music.paused) {
-        music.play().then(() => {
-            musicButton.innerHTML = "♫ Music On";
-        }).catch(() => {
-            musicButton.innerHTML = "♫ Tap to Play";
-        });
-    } else {
-        music.pause();
-        musicButton.innerHTML = "♫ Play Music";
+@media (hover: hover) {
+    .flower-card:hover {
+        transform: translateY(-6px);
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(245, 201, 255, 0.45);
+        box-shadow: 0 0 30px rgba(198, 140, 255, 0.2);
     }
 }
-</script>
 
-  <body>
-    <div class="stars" id="stars"></div>
-    <div class="fireflies" id="fireflies"></div>
+.flower {
+    font-size: 3rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 14px rgba(231, 184, 255, 0.55));
+    animation: bloom 3s ease-in-out infinite;
+}
+
+@keyframes bloom {
+    0%, 100% { transform: scale(0.95) rotate(-5deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.flower-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #e8d5fa;
+}
+
+@media (max-width: 640px) {
+    .garden {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .flower-card {
+        min-height: 140px;
+    }
+
+    .flower {
+        font-size: 2.7rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="sky" id="sky"></div>
+<div class="fireflies" id="fireflies"></div>
+
+<main class="page">
 
     <header>
-      <div class="tag">A LITTLE WORLD OF MAGIC</div>
-      <h1>A Garden of Little Things</h1>
-      <p class="subtitle">
-        Somewhere between the stars and the flowers,<br />
-        there is a little garden filled with wishes for you.
-      </p>
+        <p class="eyebrow">A little world of magic</p>
+        <h1 class="title">A Garden of<br>Little Things</h1>
+        <p class="lead">
+            Somewhere between the stars and the flowers,<br>
+            there is a little garden filled with wishes for you.
+        </p>
     </header>
 
     <div class="garden" id="garden"></div>
 
-    <p class="hint">✦ TOUCH A FLOWER TO DISCOVER ITS LITTLE SECRET ✦</p>
+    <p class="hint">✦ Touch a flower to discover its little secret ✦</p>
 
-    <div class="next-wrap">
-      <a href="wishes.html" class="next">Continue Your Journey →</a>
+    <div class="btn-row">
+        <a href="index.html" class="btn btn-ghost">← Back to Start</a>
+        <a href="wishes.html" class="btn btn-primary">Continue Your Journey →</a>
     </div>
 
-    <footer>MADE WITH A LITTLE MAGIC & A LOT OF GOOD WISHES ✨</footer>
+    <p class="site-footer">Made with a little magic &amp; a lot of good wishes ✨</p>
 
-    <div class="modal" id="modal" onclick="closeOutside(event)">
-      <div class="letter">
-        <div class="letter-icon" id="letterIcon">🌸</div>
-        <h2 id="letterTitle">A Little Wish</h2>
-        <p id="letterMessage"></p>
-        <button class="close" onclick="closeModal()">Keep this wish ✨</button>
-      </div>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-card">
+        <div class="modal-icon" data-modal-icon>🌸</div>
+        <h2 id="modalTitle" data-modal-title>A Little Wish</h2>
+        <p data-modal-text></p>
+        <button type="button" class="btn btn-ghost" data-modal-close>Keep this wish ✨</button>
     </div>
+</div>
 
-    <script>
-      const flowers = [
-        {
-          icon: "🌷",
-          name: "Happiness",
-          title: "A Life Full of Smiles",
-          message:
-            "May your days be filled with little reasons to smile, unexpected happiness and moments that make your heart feel light.",
-        },
-        {
-          icon: "🌻",
-          name: "Courage",
-          title: "Keep Shining",
-          message:
-            "May you always find the courage to chase your dreams, face every challenge and believe in the wonderful person you are.",
-        },
-        {
-          icon: "🌹",
-          name: "Kindness",
-          title: "A Beautiful Heart",
-          message:
-            "Never lose the kindness that makes you who you are. The world needs more people who bring warmth into the lives of others.",
-        },
-        {
-          icon: "🌼",
-          name: "Peace",
-          title: "A Little Peace",
-          message:
-            "May your heart always find peace, even on difficult days. You deserve a life where you feel safe, loved and understood.",
-        },
-        {
-          icon: "🪻",
-          name: "Dreams",
-          title: "Dream Without Limits",
-          message:
-            "May the dreams you keep quietly in your heart find their way into reality. Your next chapter has so many beautiful possibilities.",
-        },
-        {
-          icon: "🌸",
-          name: "Friendship",
-          title: "Some Bonds Stay",
-          message:
-            "Life takes everyone in different directions, but some childhood connections always remain a lovely part of our story.",
-        },
-        {
-          icon: "💮",
-          name: "Adventure",
-          title: "Beautiful New Beginnings",
-          message:
-            "May you discover new places, meet wonderful people and collect countless memories worth remembering.",
-        },
-        {
-          icon: "✨",
-          name: "Magic",
-          title: "Your Own Little Magic",
-          message:
-            "And finally, may life surprise you with beautiful things you never even knew to wish for. Keep being wonderfully you.",
-        },
-      ];
+<script src="assets/js/site.js"></script>
+<script>
+(function () {
+    var flowers = [
+        { icon: '🌷', name: 'Happiness', title: 'A Life Full of Smiles',
+          message: 'May your days be filled with little reasons to smile, unexpected happiness and moments that make your heart feel light.' },
+        { icon: '🌻', name: 'Courage', title: 'Keep Shining',
+          message: 'May you always find the courage to chase your dreams, face every challenge and believe in the wonderful person you are.' },
+        { icon: '🌹', name: 'Kindness', title: 'A Beautiful Heart',
+          message: 'Never lose the kindness that makes you who you are. The world needs more people who bring warmth into the lives of others.' },
+        { icon: '🌼', name: 'Peace', title: 'A Little Peace',
+          message: 'May your heart always find peace, even on difficult days. You deserve a life where you feel safe, loved and understood.' },
+        { icon: '🪻', name: 'Dreams', title: 'Dream Without Limits',
+          message: 'May the dreams you keep quietly in your heart find their way into reality. Your next chapter has so many beautiful possibilities.' },
+        { icon: '🌸', name: 'Friendship', title: 'Some Bonds Stay',
+          message: 'Life takes everyone in different directions, but some childhood connections always remain a lovely part of our story.' },
+        { icon: '💮', name: 'Adventure', title: 'Beautiful New Beginnings',
+          message: 'May you discover new places, meet wonderful people and collect countless memories worth remembering.' },
+        { icon: '✨', name: 'Magic', title: 'Your Own Little Magic',
+          message: 'And finally, may life surprise you with beautiful things you never even knew to wish for. Keep being wonderfully you.' }
+    ];
 
-      const garden = document.getElementById("garden");
+    var garden = document.getElementById('garden');
 
-      flowers.forEach((flower, index) => {
-        const card = document.createElement("div");
-        card.className = "flower-card";
-        card.style.animationDelay = `${index * 0.12}s`;
+    flowers.forEach(function (f, i) {
+        var card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'flower-card';
+        card.style.animationDelay = (i * 0.1) + 's';
+        card.setAttribute('aria-label', f.name + ': open this wish');
 
-        card.innerHTML = `
-        <div class="flower">${flower.icon}</div>
-        <div class="flower-name">${flower.name}</div>
-    `;
+        var icon = document.createElement('span');
+        icon.className = 'flower';
+        icon.textContent = f.icon;
 
-        card.addEventListener("click", () => openFlower(flower));
+        var name = document.createElement('span');
+        name.className = 'flower-name';
+        name.textContent = f.name;
+
+        card.appendChild(icon);
+        card.appendChild(name);
+        card.addEventListener('click', function () {
+            Site.Modal.open(f.icon, f.title, f.message, 'Keep this wish ✨');
+        });
         garden.appendChild(card);
-      });
+    });
 
-      function openFlower(flower) {
-        document.getElementById("letterIcon").textContent = flower.icon;
-        document.getElementById("letterTitle").textContent = flower.title;
-        document.getElementById("letterMessage").textContent = flower.message;
-        document.getElementById("modal").classList.add("active");
-      }
-
-      function closeModal() {
-        document.getElementById("modal").classList.remove("active");
-      }
-
-      function closeOutside(event) {
-        if (event.target.id === "modal") closeModal();
-      }
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeModal();
-      });
-
-      // Stars
-      const stars = document.getElementById("stars");
-
-      for (let i = 0; i < 90; i++) {
-        const star = document.createElement("div");
-        star.className = "star";
-        star.style.left = Math.random() * 100 + "%";
-        star.style.top = Math.random() * 100 + "%";
-        star.style.animationDelay = Math.random() * 4 + "s";
-        stars.appendChild(star);
-      }
-
-      // Fireflies
-      const fireflies = document.getElementById("fireflies");
-
-      for (let i = 0; i < 22; i++) {
-        const fly = document.createElement("div");
-        fly.className = "firefly";
-        fly.style.left = Math.random() * 100 + "%";
-        fly.style.top = Math.random() * 100 + "%";
-        fly.style.animationDelay = Math.random() * 8 + "s";
-        fireflies.appendChild(fly);
-      }
-    </script>
-  </body>
+    /* Fireflies */
+    var box = document.getElementById('fireflies');
+    var count = window.matchMedia('(max-width: 600px)').matches ? 12 : 22;
+    for (var i = 0; i < count; i++) {
+        var fly = document.createElement('span');
+        fly.className = 'firefly';
+        fly.style.left = Math.random() * 100 + '%';
+        fly.style.top = Math.random() * 100 + '%';
+        fly.style.animationDelay = Math.random() * 8 + 's';
+        box.appendChild(fly);
+    }
+})();
+</script>
+</body>
 </html>

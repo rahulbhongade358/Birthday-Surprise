@@ -1,104 +1,37 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#19132f">
 <title>Some Memories Never Grow Old ❤️</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    font-family: Georgia, serif;
-    color: white;
-    background:
-        radial-gradient(ellipse at 50% 100%, #57305d 0%, transparent 55%),
-        linear-gradient(160deg, #080c20, #19132f 55%, #301b3c);
-}
-
-#stars {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-}
-
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: white;
-    animation: twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle {
-    from { opacity: 0.2; transform: scale(0.7); }
-    to { opacity: 1; transform: scale(1.5); }
-}
-
-.container {
-    position: relative;
-    z-index: 2;
-    width: 90%;
-    max-width: 700px;
-    margin: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 60px 15px;
-}
-
-.eyebrow {
-    color: #e8c5f3;
-    font-size: 11px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    margin-bottom: 25px;
-}
-
-h1 {
-    font-size: clamp(35px, 7vw, 58px);
-    font-weight: normal;
-    line-height: 1.2;
-    text-shadow: 0 0 25px #e9b9ff55;
-}
-
-.intro {
-    margin-top: 22px;
-    font-size: 15px;
-    line-height: 1.9;
-    color: #d9cde8;
-}
-
 /* Gift box */
 .gift-area {
-    margin: 65px auto 30px;
-    cursor: pointer;
     position: relative;
     width: 170px;
-    height: 160px;
+    height: 170px;
+    margin: 4.5rem auto 0.5rem;
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .gift {
     position: relative;
     width: 145px;
     height: 100px;
-    background: linear-gradient(135deg, #e98ab6, #a94c91);
     border-radius: 5px;
-    box-shadow: 0 15px 35px #0007, 0 0 30px #ef9acb33;
+    background: linear-gradient(135deg, #e98ab6, #a94c91);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), 0 0 30px rgba(239, 154, 203, 0.2);
     animation: giftFloat 2.5s ease-in-out infinite;
 }
 
@@ -107,9 +40,9 @@ h1 {
 }
 
 .gift::before {
-    content: "";
+    content: '';
     position: absolute;
-    left: 58px;
+    left: 59px;
     width: 27px;
     height: 100%;
     background: #ffe2a5;
@@ -117,21 +50,21 @@ h1 {
 
 .gift-lid {
     position: absolute;
-    width: 165px;
-    height: 25px;
     left: -10px;
     top: -22px;
+    z-index: 3;
+    width: 165px;
+    height: 25px;
     border-radius: 5px;
     background: linear-gradient(135deg, #ffb1d1, #d66ca6);
     transform-origin: left bottom;
     transition: transform 1s ease;
-    z-index: 3;
 }
 
 .gift-lid::before {
-    content: "";
+    content: '';
     position: absolute;
-    left: 68px;
+    left: 69px;
     width: 27px;
     height: 25px;
     background: #ffe2a5;
@@ -140,13 +73,27 @@ h1 {
 .bow {
     position: absolute;
     top: -48px;
-    left: 56px;
+    left: 55px;
+    z-index: 4;
     width: 35px;
     height: 25px;
     border: 7px solid #ffe2a5;
     border-radius: 50%;
-    z-index: 4;
     transition: 0.5s;
+}
+
+.gift-heart {
+    position: absolute;
+    top: 28px;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.gift.open {
+    animation: none;
 }
 
 .gift.open .gift-lid {
@@ -158,209 +105,96 @@ h1 {
     opacity: 0;
 }
 
-.gift.open {
-    animation: none;
-}
-
-.gift-heart {
-    position: absolute;
-    z-index: 2;
-    top: 25px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 25px;
-}
-
-.hint {
-    color: #edc8ef;
-    font-size: 13px;
-    letter-spacing: 1px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    50% { opacity: 0.4; }
-}
-
 /* Final letter */
 .final-letter {
     display: none;
     width: 100%;
-    max-width: 570px;
-    margin-top: 35px;
-    padding: 35px 28px;
-    border: 1px solid #dcb4df66;
-    border-radius: 12px;
-    background: linear-gradient(145deg, #ffffff12, #ffffff05);
-    box-shadow: 0 15px 50px #0004;
+    max-width: 36rem;
+    margin-top: 2rem;
+    padding: clamp(1.6rem, 5vw, 2.4rem) clamp(1.2rem, 5vw, 2rem);
+    border: 1px solid rgba(220, 180, 223, 0.4);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(8px);
-    animation: reveal 1.2s ease forwards;
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .final-letter.show {
     display: block;
-}
-
-@keyframes reveal {
-    from { opacity: 0; transform: translateY(25px); }
-    to { opacity: 1; transform: translateY(0); }
+    animation: fadeUp 1.1s ease backwards;
 }
 
 .final-letter h2 {
+    margin-bottom: 1.4rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.7rem, 5vw, 2.1rem);
     color: #f4d4f8;
-    font-size: 29px;
-    font-weight: normal;
-    margin-bottom: 25px;
 }
 
 .final-letter p {
+    margin-bottom: 1rem;
     color: #e8dcec;
-    font-size: 15px;
-    line-height: 2;
-    margin-bottom: 17px;
+    font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+    line-height: 1.95;
 }
 
 .signature {
-    margin-top: 28px;
-    color: #f5c8ed;
-    font-size: 17px;
+    margin-top: 1.6rem;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
     font-style: italic;
+    color: #f5c8ed;
 }
 
+/* Closing */
 .closing {
     display: none;
-    margin-top: 35px;
-    animation: reveal 1.5s ease;
+    margin-top: 2.2rem;
 }
 
 .closing.show {
     display: block;
+    animation: fadeUp 1.3s ease backwards;
 }
 
 .closing h2 {
-    font-size: clamp(27px, 6vw, 39px);
-    font-weight: normal;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    line-height: 1.35;
     color: #ffe0f4;
-    line-height: 1.4;
 }
 
 .closing p {
+    max-width: 28rem;
+    margin: 0.9rem auto 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    line-height: 1.9;
+    text-transform: uppercase;
     color: #d9c8e7;
-    margin-top: 15px;
-    font-size: 13px;
-    letter-spacing: 2px;
-}
-
-.restart {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 12px 25px;
-    border: 1px solid #e7c1ed;
-    border-radius: 30px;
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 1px;
-    transition: 0.3s;
-}
-
-.restart:hover {
-    background: #e7c1ed;
-    color: #24142f;
-}
-
-.footer {
-    margin-top: 45px;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: #bca9cd;
-}
-
-@media(max-width: 480px) {
-    .container {
-        padding: 45px 12px;
-    }
-
-    .final-letter {
-        padding: 28px 19px;
-    }
-
-    .final-letter p {
-        font-size: 14px;
-    }
 }
 </style>
 </head>
-
-<!-- Background Music -->
-<audio id="bgMusic" loop>
-    <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Music Button -->
-<button id="musicButton" onclick="toggleMusic()">
-    ♫ Play Music
-</button>
-
-<style>
-#musicButton {
-    position: fixed;
-    bottom: 22px;
-    right: 20px;
-    z-index: 9999;
-    padding: 12px 18px;
-    border: 1px solid #e8c0f5;
-    border-radius: 30px;
-    background: rgba(30, 15, 45, 0.85);
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}
-
-#musicButton:hover {
-    background: #e8c0f5;
-    color: #26142f;
-}
-</style>
-
-<script>
-const music = document.getElementById("bgMusic");
-const musicButton = document.getElementById("musicButton");
-
-music.volume = 0.35;
-
-function toggleMusic() {
-    if (music.paused) {
-        music.play().then(() => {
-            musicButton.innerHTML = "♫ Music On";
-        }).catch(() => {
-            musicButton.innerHTML = "♫ Tap to Play";
-        });
-    } else {
-        music.pause();
-        musicButton.innerHTML = "♫ Play Music";
-    }
-}
-</script>
-
 <body>
 
-<div id="stars"></div>
+<div class="sky" id="sky"></div>
 
-<main class="container">
+<main class="page">
 
-    <div class="eyebrow">Before this little journey ends</div>
+    <header>
+        <p class="eyebrow">Before this little journey ends</p>
+        <h1 class="title">Some Memories<br>Never Grow Old ✨</h1>
+        <p class="lead">
+            Every little journey deserves a special ending.<br>
+            And this one has one last surprise waiting for you.
+        </p>
+    </header>
 
-    <h1>Some Memories<br>Never Grow Old ✨</h1>
-
-    <p class="intro">
-        Every little journey deserves a special ending.<br>
-        And this one has one last surprise waiting for you.
-    </p>
-
-    <div class="gift-area" onclick="openGift()">
+    <div class="gift-area" id="giftArea" role="button" tabindex="0" aria-label="Tap the gift to open your last surprise">
         <div class="gift" id="gift">
             <div class="gift-lid"></div>
             <div class="bow"></div>
@@ -368,103 +202,66 @@ function toggleMusic() {
         </div>
     </div>
 
-    <p class="hint" id="hint">
-        ✦ TAP THE GIFT TO OPEN YOUR LAST SURPRISE ✦
-    </p>
+    <p class="hint" id="hint">✦ Tap the gift to open your last surprise ✦</p>
 
     <section class="final-letter" id="finalLetter">
-
         <h2>A Little Note For You 💌</h2>
 
-        <p>
-            It's funny how time passes, isn't it?
-            Childhood days turn into memories, years go by,
-            and everyone gets busy building their own world.
-        </p>
+        <p>It's funny how time passes, isn't it? Childhood days turn into memories, years go by, and everyone gets busy building their own world.</p>
 
-        <p>
-            But some connections are special.
-            Even after years, meeting again can bring back
-            a little piece of those old, happy days.
-        </p>
+        <p>But some connections are special. Even after years, meeting again can bring back a little piece of those old, happy days.</p>
 
-        <p>
-            I hope this new year of your life brings you
-            happiness, courage, good health and countless
-            reasons to smile.
-        </p>
+        <p>I hope this new year of your life brings you happiness, courage, good health and countless reasons to smile.</p>
 
-        <p>
-            Keep being kind, keep dreaming big,
-            and never lose that beautiful spark within you.
-        </p>
+        <p>Keep being kind, keep dreaming big, and never lose that beautiful spark within you.</p>
 
-        <p>
-            And hopefully, this is just the beginning
-            of many more memories and conversations ahead.
-        </p>
+        <p>And hopefully, this is just the beginning of many more memories and conversations ahead.</p>
 
-        <div class="signature">
-            With warm wishes,<br>
-            Your Childhood Friend ❤️
-        </div>
-
+        <div class="signature">With warm wishes,<br>Your Childhood Friend ❤️</div>
     </section>
 
     <section class="closing" id="closing">
         <h2>Until Our Next Chapter... 🌷</h2>
-
-        <p>
-            SOME STORIES DON'T REALLY END.
-            THEY JUST WAIT FOR ANOTHER BEAUTIFUL DAY.
-        </p>
-
-        <a href="index.html" class="restart">
-            Relive The Little Journey ↗
-        </a>
+        <p>Some stories don't really end. They just wait for another beautiful day.</p>
     </section>
 
-    <div class="footer">
-        MADE WITH MEMORIES & A LITTLE MAGIC ✦
+    <div class="btn-row">
+        <a href="celebration.html" class="btn btn-ghost">← Back to the Celebration</a>
+        <a href="index.html" class="btn btn-primary is-hidden" id="restartBtn">Relive the Little Journey ↗</a>
     </div>
+
+    <p class="site-footer">Made with memories &amp; a little magic ✦</p>
 
 </main>
 
+<script src="assets/js/site.js"></script>
 <script>
-// Create stars
-const stars = document.getElementById("stars");
+(function () {
+    var area = document.getElementById('giftArea');
+    var opened = false;
 
-for (let i = 0; i < 110; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
-    star.style.animationDelay = Math.random() * 3 + "s";
-    star.style.animationDuration = (1 + Math.random() * 3) + "s";
-    stars.appendChild(star);
-}
+    function openGift() {
+        if (opened) return;
+        opened = true;
 
-// Open gift
-let giftOpened = false;
+        document.getElementById('gift').classList.add('open');
+        area.setAttribute('aria-label', 'Gift opened');
+        document.getElementById('hint').classList.add('is-hidden');
 
-function openGift() {
-    if (giftOpened) return;
+        setTimeout(function () {
+            var letter = document.getElementById('finalLetter');
+            letter.classList.add('show');
+            letter.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    giftOpened = true;
+            setTimeout(function () {
+                document.getElementById('closing').classList.add('show');
+                document.getElementById('restartBtn').classList.remove('is-hidden');
+            }, 1800);
+        }, 900);
+    }
 
-    document.getElementById("gift").classList.add("open");
-    document.getElementById("hint").style.display = "none";
-
-    setTimeout(() => {
-        document.getElementById("finalLetter").classList.add("show");
-
-        setTimeout(() => {
-            document.getElementById("closing").classList.add("show");
-        }, 1800);
-
-    }, 900);
-}
+    Site.onActivate(area, openGift);
+})();
 </script>
-
 </body>
 </html>

@@ -1,407 +1,222 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#352746">
 <title>A Letter From the Heart 💌</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Caveat:wght@400;500;600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-min-height:100vh;
-background:linear-gradient(150deg,#17142e,#352746,#59405b);
-font-family:'Quicksand',sans-serif;
-color:white;
-overflow-x:hidden;
+.letter-card {
+    display: none;
+    width: 100%;
+    max-width: 40rem;
+    margin-top: 2rem;
+    padding: clamp(1.6rem, 5vw, 2.6rem);
+    border-radius: 6px;
+    background: linear-gradient(#fff9ee, #fbefdd);
+    color: #6d4a64;
+    text-align: left;
+    box-shadow: 0 20px 60px rgba(8, 5, 27, 0.55);
+    font-family: var(--font-hand);
+    font-size: clamp(1.3rem, 3.6vw, 1.6rem);
+    line-height: 1.65;
+    cursor: pointer;
 }
 
-.stars{
-position:fixed;
-inset:0;
-pointer-events:none;
+.letter-card.show {
+    display: block;
+    animation: fadeUp 0.9s ease backwards;
 }
 
-.star{
-position:absolute;
-color:#fff1c7;
-animation:twinkle 3s infinite;
+.letter-card h2 {
+    margin-bottom: 1.2rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.7rem, 4.5vw, 2.1rem);
+    text-align: center;
+    color: #a45e88;
 }
 
-@keyframes twinkle{
-0%,100%{opacity:.2;transform:scale(.7)}
-50%{opacity:1;transform:scale(1.3)}
+.letter-card p {
+    margin-bottom: 0.9rem;
 }
 
-header{
-position:relative;
-text-align:center;
-padding:65px 20px 20px;
+/* Typewriter: the untyped part keeps its space so the card never jumps */
+.letter-card .rest {
+    opacity: 0;
 }
 
-.tag{
-font-size:10px;
-letter-spacing:5px;
-color:#eac9ec;
-margin-bottom:20px;
+.signature,
+.letter-heart {
+    opacity: 0;
+    transition: opacity 1s ease;
 }
 
-h1{
-font-family:'Playfair Display',serif;
-font-size:clamp(36px,7vw,65px);
-font-weight:400;
-color:#fff0e9;
+.letter-card.finished .signature,
+.letter-card.finished .letter-heart {
+    opacity: 1;
 }
 
-.subtitle{
-font-size:13px;
-color:#d8c6e3;
-margin-top:15px;
-line-height:1.8;
+.signature {
+    margin-top: 1.4rem;
+    text-align: right;
+    font-size: 1.2em;
+    line-height: 1.3;
+    color: #a45e88;
 }
 
-.stage{
-min-height:550px;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:35px 15px;
-position:relative;
-perspective:1200px;
+.letter-heart {
+    margin-top: 0.8rem;
+    text-align: center;
+    font-size: 1.8rem;
+    animation: beat 1.5s infinite;
 }
 
-.envelope-wrap{
-position:relative;
-width:min(330px,85vw);
-height:225px;
-cursor:pointer;
-transition:.5s;
+@keyframes beat {
+    50% { transform: scale(1.2); }
 }
 
-.envelope-wrap:hover{
-transform:translateY(-8px);
+.skip-hint {
+    margin-top: 1.2rem;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #a98aa0;
 }
 
-.envelope{
-position:absolute;
-inset:0;
-background:#e9a9c8;
-border-radius:5px;
-box-shadow:0 20px 60px #09051588;
-}
-
-.envelope-front{
-position:absolute;
-inset:0;
-background:#f1c0d7;
-clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);
-z-index:4;
-}
-
-.flap{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:120px;
-background:#dc8fb5;
-clip-path:polygon(0 0,100% 0,50% 100%);
-transform-origin:top;
-transition:transform .8s;
-z-index:5;
-}
-
-.seal{
-position:absolute;
-z-index:6;
-top:83px;
-left:50%;
-transform:translateX(-50%);
-font-size:34px;
-}
-
-.letter-paper{
-position:absolute;
-width:88%;
-height:190px;
-background:#fff6e9;
-left:6%;
-top:12px;
-z-index:2;
-padding:20px;
-color:#80566d;
-text-align:center;
-transition:1s;
-font-family:'Caveat',cursive;
-font-size:21px;
-}
-
-.envelope-wrap.open .flap{
-transform:rotateX(180deg);
-z-index:1;
-}
-
-.envelope-wrap.open .letter-paper{
-transform:translateY(-190px);
-height:auto;
-min-height:340px;
-z-index:3;
-box-shadow:0 10px 35px #08051b66;
-}
-
-.click-text{
-position:absolute;
-top:255px;
-width:100%;
-text-align:center;
-font-size:11px;
-letter-spacing:3px;
-color:#f1d5ec;
-}
-
-.letter-content{
-display:none;
-position:relative;
-z-index:3;
-width:min(620px,92%);
-margin:-110px auto 60px;
-padding:40px 30px;
-border-radius:4px;
-background:#fff8eb;
-color:#72516a;
-box-shadow:0 20px 65px #08051b77;
-font-family:'Caveat',cursive;
-font-size:22px;
-line-height:1.9;
-}
-
-.letter-content.show{
-display:block;
-animation:paperIn 1s ease both;
-}
-
-@keyframes paperIn{
-from{opacity:0;transform:translateY(35px) scale(.95)}
-to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-.letter-content h2{
-font-family:'Playfair Display',serif;
-font-weight:400;
-text-align:center;
-font-size:29px;
-margin-bottom:25px;
-color:#a45e88;
-}
-
-.letter-content p{
-margin-bottom:16px;
-}
-
-.signature{
-text-align:right;
-margin-top:25px;
-font-size:26px;
-color:#a45e88;
-}
-
-.heart{
-text-align:center;
-font-size:30px;
-margin-top:20px;
-animation:beat 1.5s infinite;
-}
-
-@keyframes beat{
-50%{transform:scale(1.2)}
-}
-
-.nav{
-text-align:center;
-padding:20px 15px 50px;
-}
-
-.nav a{
-display:inline-block;
-color:#ffe3f2;
-text-decoration:none;
-border:1px solid #edc3e477;
-border-radius:30px;
-padding:12px 25px;
-font-size:12px;
-}
-
-@media(max-width:500px){
-.stage{min-height:470px}
-.letter-content{font-size:20px;padding:30px 22px}
-.envelope-wrap.open .letter-paper{transform:translateY(-170px)}
+.letter-card.finished .skip-hint {
+    display: none;
 }
 </style>
 </head>
-
-<!-- Background Music -->
-<audio id="bgMusic" loop>
-    <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Music Button -->
-<button id="musicButton" onclick="toggleMusic()">
-    ♫ Play Music
-</button>
-
-<style>
-#musicButton {
-    position: fixed;
-    bottom: 22px;
-    right: 20px;
-    z-index: 9999;
-    padding: 12px 18px;
-    border: 1px solid #e8c0f5;
-    border-radius: 30px;
-    background: rgba(30, 15, 45, 0.85);
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}
-
-#musicButton:hover {
-    background: #e8c0f5;
-    color: #26142f;
-}
-</style>
-
-<script>
-const music = document.getElementById("bgMusic");
-const musicButton = document.getElementById("musicButton");
-
-music.volume = 0.35;
-
-function toggleMusic() {
-    if (music.paused) {
-        music.play().then(() => {
-            musicButton.innerHTML = "♫ Music On";
-        }).catch(() => {
-            musicButton.innerHTML = "♫ Tap to Play";
-        });
-    } else {
-        music.pause();
-        musicButton.innerHTML = "♫ Play Music";
-    }
-}
-</script>
-
 <body>
 
-<div class="stars" id="stars"></div>
+<div class="sky" id="sky"></div>
 
-<header>
-<div class="tag">SOME WORDS FROM THE HEART</div>
-<h1>A Letter For You</h1>
-<p class="subtitle">
-Some things are better written than spoken.<br>
-So here's a little letter, just for you.
-</p>
-</header>
+<main class="page">
 
-<div class="stage">
-<div class="envelope-wrap" id="envelope" onclick="openEnvelope()">
-<div class="envelope"></div>
-<div class="letter-paper">A little note<br>for someone special... 💗</div>
-<div class="flap"></div>
-<div class="envelope-front"></div>
-<div class="seal">💌</div>
-<div class="click-text">CLICK TO OPEN YOUR LETTER</div>
-</div>
-</div>
+    <header>
+        <p class="eyebrow">Some words from the heart</p>
+        <h1 class="title">A Letter For You</h1>
+        <p class="lead">
+            Some things are better written than spoken.<br>
+            So here's a little letter, just for you.
+        </p>
+    </header>
 
-<article class="letter-content" id="letter">
-<h2>Dear Friend,</h2>
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Tap to open your letter">
+        <div class="env-back"></div>
+        <div class="env-paper">
+            <span class="env-paper-icon">💗</span>
+            <span class="env-paper-text">A little note<br>for someone special</span>
+        </div>
+        <div class="env-flap"></div>
+        <div class="env-front"></div>
+        <div class="env-seal">💌</div>
+    </div>
 
-<p id="line1"></p>
-<p id="line2"></p>
-<p id="line3"></p>
-<p id="line4"></p>
-<p id="line5"></p>
+    <p class="hint" id="hint">✦ Tap to open your letter ✦</p>
 
-<div class="signature">
-With warm wishes,<br>
-Your Childhood Friend ✨
-</div>
+    <article class="letter-card" id="letter">
+        <h2>Dear Friend,</h2>
+        <div id="paragraphs"></div>
+        <div class="signature">With warm wishes,<br>Your Childhood Friend ✨</div>
+        <div class="letter-heart" aria-hidden="true">💗</div>
+        <p class="skip-hint" id="skipHint">Tap the letter to show it all</p>
+    </article>
 
-<div class="heart">💗</div>
-</article>
+    <div class="btn-row">
+        <a href="wishes.html" class="btn btn-ghost">← Back to Your Little World</a>
+        <a href="celebration.html" class="btn btn-primary">Let's Celebrate →</a>
+    </div>
 
-<div class="nav">
-<a href="wishes.html">← Back to Your Little World</a>
-</div>
-<div class="nav">
-   <a href="celebration.html">Let's Celebrate →</a>
-</div>
+</main>
+
+<script src="assets/js/site.js"></script>
 <script>
-const stars=document.getElementById("stars");
+(function () {
+    var messages = [
+        'Do you know? Some of the nicest parts of life are the memories we collect without even realising how special they will become.',
+        'Childhood was a different little world. Simple days, innocent laughter and people who became part of our story.',
+        'Years pass, everyone grows up and life takes us in different directions. But it is always lovely when an old connection finds its way back.',
+        'On your birthday, I just want to wish you endless happiness, good health, wonderful opportunities and countless reasons to smile.',
+        'May the coming year bring you beautiful surprises, unforgettable memories and everything your heart quietly wishes for.'
+    ];
 
-for(let i=0;i<90;i++){
-const s=document.createElement("div");
-s.className="star";
-s.textContent="✦";
-s.style.left=Math.random()*100+"%";
-s.style.top=Math.random()*100+"%";
-s.style.fontSize=(Math.random()*12+5)+"px";
-s.style.animationDelay=Math.random()*4+"s";
-stars.appendChild(s);
-}
+    var env = document.getElementById('envelope');
+    var hint = document.getElementById('hint');
+    var card = document.getElementById('letter');
+    var wrap = document.getElementById('paragraphs');
+    var opened = false;
+    var finished = false;
+    var timer = null;
 
-let opened=false;
+    /* Build paragraphs: typed part + invisible remainder (keeps layout steady) */
+    var parts = messages.map(function (text) {
+        var p = document.createElement('p');
+        var done = document.createElement('span');
+        var rest = document.createElement('span');
+        rest.className = 'rest';
+        rest.textContent = text;
+        p.appendChild(done);
+        p.appendChild(rest);
+        wrap.appendChild(p);
+        return { text: text, done: done, rest: rest };
+    });
 
-const messages=[
-"Do you know? Some of the nicest parts of life are the memories we collect without even realising how special they will become.",
-"Childhood was a different little world. Simple days, innocent laughter and people who became part of our story.",
-"Years pass, everyone grows up and life takes us in different directions. But it is always lovely when an old connection finds its way back.",
-"On your birthday, I just want to wish you endless happiness, good health, wonderful opportunities and countless reasons to smile.",
-"May the coming year bring you beautiful surprises, unforgettable memories and everything your heart quietly wishes for."
-];
+    function finishAll() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timer);
+        parts.forEach(function (x) {
+            x.done.textContent = x.text;
+            x.rest.textContent = '';
+        });
+        card.classList.add('finished');
+    }
 
-function typeText(id,text,delay){
-const el=document.getElementById(id);
-el.textContent="";
-let i=0;
+    function typeParagraph(index, pos) {
+        if (finished) return;
+        if (index >= parts.length) {
+            finishAll();
+            return;
+        }
+        var x = parts[index];
+        if (pos <= x.text.length) {
+            x.done.textContent = x.text.slice(0, pos);
+            x.rest.textContent = x.text.slice(pos);
+            timer = setTimeout(function () { typeParagraph(index, pos + 1); }, 16);
+        } else {
+            timer = setTimeout(function () { typeParagraph(index + 1, 0); }, 350);
+        }
+    }
 
-function type(){
-if(i<text.length){
-el.textContent+=text.charAt(i);
-i++;
-setTimeout(type,delay);
-}
-}
+    function openEnvelope() {
+        if (opened) return;
+        opened = true;
+        env.classList.add('open');
+        env.setAttribute('aria-label', 'Letter opened');
+        hint.classList.add('is-hidden');
 
-type();
-}
+        setTimeout(function () {
+            card.classList.add('show');
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            typeParagraph(0, 0);
+        }, 1100);
+    }
 
-function openEnvelope(){
-if(opened)return;
-opened=true;
-
-const envelope=document.getElementById("envelope");
-envelope.classList.add("open");
-
-setTimeout(()=>{
-const letter=document.getElementById("letter");
-letter.classList.add("show");
-
-messages.forEach((message,index)=>{
-setTimeout(()=>{
-typeText("line"+(index+1),message,24);
-},index*3000);
-});
-
-},1000);
-}
+    Site.onActivate(env, openEnvelope);
+    card.addEventListener('click', finishAll);
+})();
 </script>
-
-
 </body>
 </html>

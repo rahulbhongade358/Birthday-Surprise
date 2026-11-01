@@ -1,35 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#28143d">
 <title>Today Is All About You 🎂</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    font-family: Georgia, serif;
-    color: white;
-    text-align: center;
-    background:
-        radial-gradient(ellipse at 50% 70%, #69336e 0%, transparent 55%),
-        linear-gradient(160deg, #100d2a, #28143d, #451d4b);
-}
-
-/* Background lights */
+/* Glowing lights */
 #lights {
     position: fixed;
     inset: 0;
-    pointer-events: none;
+    z-index: 0;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .light {
@@ -43,17 +32,17 @@ body {
 }
 
 @keyframes blink {
-    from { opacity: 0.2; }
-    to { opacity: 1; }
+    from { opacity: 0.15; }
+    to { opacity: 0.9; }
 }
 
 /* Confetti */
 #confetti {
     position: fixed;
     inset: 0;
-    pointer-events: none;
+    z-index: 150;
     overflow: hidden;
-    z-index: 10;
+    pointer-events: none;
 }
 
 .confetti-piece {
@@ -66,85 +55,48 @@ body {
 }
 
 @keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(900deg);
-    }
+    to { transform: translateY(110vh) rotate(900deg); }
 }
 
 /* Balloons */
 .balloon {
     position: fixed;
-    bottom: -150px;
-    width: 65px;
-    height: 85px;
-    border-radius: 50% 50% 45% 45%;
-    opacity: 0.75;
+    bottom: -160px;
     z-index: 1;
-    animation: floatUp 14s linear infinite;
+    width: 62px;
+    height: 80px;
+    border-radius: 50% 50% 45% 45%;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: floatUp 15s linear infinite;
 }
 
 .balloon::after {
-    content: "";
+    content: '';
     position: absolute;
-    width: 1px;
-    height: 90px;
-    background: #ffffff77;
     left: 50%;
-    top: 84px;
+    top: 100%;
+    width: 1px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.45);
 }
 
 @keyframes floatUp {
-    to { transform: translateY(-130vh); }
-}
-
-/* Main */
-.container {
-    position: relative;
-    z-index: 2;
-    width: 92%;
-    max-width: 750px;
-    margin: auto;
-    padding: 65px 15px 50px;
-}
-
-.eyebrow {
-    color: #f6c8ff;
-    font-size: 11px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-size: clamp(34px, 7vw, 57px);
-    font-weight: normal;
-    line-height: 1.2;
-    text-shadow: 0 0 25px #f4baff66;
-}
-
-.subtitle {
-    color: #e5cfe9;
-    font-size: 15px;
-    line-height: 1.8;
-    margin-top: 18px;
+    to { transform: translateY(calc(-100vh - 280px)); }
 }
 
 /* Cake */
 .cake-area {
-    margin: 65px auto 30px;
+    position: relative;
     width: 240px;
     height: 240px;
-    position: relative;
+    margin: 3rem auto 0.5rem;
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
     cursor: pointer;
-    animation: cakeAppear 1.5s ease;
-}
-
-@keyframes cakeAppear {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+    animation: fadeUp 1.4s ease backwards;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .plate {
@@ -154,7 +106,7 @@ h1 {
     height: 18px;
     border-radius: 50%;
     background: linear-gradient(#fff1e6, #d6a5c5);
-    box-shadow: 0 8px 20px #0006;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .cake-bottom {
@@ -182,19 +134,19 @@ h1 {
     bottom: 75px;
     width: 190px;
     height: 30px;
-    background: #fff0f4;
     border-radius: 0 0 15px 15px;
+    background: #fff0f4;
 }
 
 .icing::before,
 .icing::after {
-    content: "";
+    content: '';
     position: absolute;
-    background: #fff0f4;
+    top: 10px;
     width: 15px;
     height: 24px;
     border-radius: 0 0 12px 12px;
-    top: 10px;
+    background: #fff0f4;
 }
 
 .icing::before { left: 35px; }
@@ -204,21 +156,20 @@ h1 {
     position: absolute;
     bottom: 125px;
     left: 50%;
-    transform: translateX(-50%);
     width: 18px;
     height: 18px;
-    background: #e74d6b;
+    transform: translateX(-50%);
     border-radius: 50%;
+    background: #e74d6b;
     box-shadow: 0 0 10px #ff829b;
 }
 
-/* Candles */
 .candles {
     position: absolute;
     bottom: 128px;
+    z-index: 3;
     display: flex;
     gap: 35px;
-    z-index: 3;
 }
 
 .candle {
@@ -226,13 +177,7 @@ h1 {
     width: 12px;
     height: 48px;
     border-radius: 3px;
-    background: repeating-linear-gradient(
-        45deg,
-        #fff,
-        #fff 5px,
-        #f49ac2 5px,
-        #f49ac2 10px
-    );
+    background: repeating-linear-gradient(45deg, #fff, #fff 5px, #f49ac2 5px, #f49ac2 10px);
 }
 
 .flame {
@@ -241,12 +186,11 @@ h1 {
     left: -3px;
     width: 18px;
     height: 23px;
-    background: radial-gradient(ellipse, #fff8c6 10%, #ffb63e 55%, #ff6c2f);
     border-radius: 50% 50% 40% 40%;
-    transform: rotate(5deg);
+    background: radial-gradient(ellipse, #fff8c6 10%, #ffb63e 55%, #ff6c2f);
     box-shadow: 0 0 18px #ffc34e;
-    animation: flicker 0.5s infinite alternate;
     transform-origin: bottom;
+    animation: flicker 0.5s infinite alternate;
 }
 
 @keyframes flicker {
@@ -260,7 +204,6 @@ h1 {
     transition: 0.4s;
 }
 
-/* Smoke */
 .smoke {
     display: none;
     position: absolute;
@@ -280,268 +223,136 @@ h1 {
     to { opacity: 0; transform: translateY(-45px) scale(1.5); }
 }
 
-.hint {
-    color: #f1c9ef;
-    font-size: 13px;
-    letter-spacing: 1px;
-    animation: pulse 2s infinite;
-}
+@media (max-width: 480px) {
+    .balloon {
+        width: 46px;
+        height: 60px;
+    }
 
-@keyframes pulse {
-    50% { opacity: 0.45; }
-}
+    .balloon::after {
+        height: 55px;
+    }
 
-/* Celebration message */
-.celebration-message {
-    display: none;
-    margin: 35px auto 0;
-    max-width: 550px;
-    animation: reveal 1.2s ease forwards;
-}
-
-.celebration-message.show {
-    display: block;
-}
-
-@keyframes reveal {
-    from { opacity: 0; transform: translateY(25px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.celebration-message h2 {
-    color: #ffe0f5;
-    font-size: clamp(27px, 6vw, 38px);
-    font-weight: normal;
-    margin-bottom: 18px;
-}
-
-.celebration-message p {
-    color: #ead7ed;
-    font-size: 15px;
-    line-height: 1.9;
-}
-
-.next {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 14px 30px;
-    border: 1px solid #f5c4ef;
-    border-radius: 30px;
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 1px;
-    transition: 0.3s;
-}
-
-.next:hover {
-    background: #f5c4ef;
-    color: #28143d;
-    box-shadow: 0 0 25px #f5c4ef66;
-}
-
-.footer {
-    position: relative;
-    z-index: 2;
-    padding: 35px 10px 20px;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: #c9add1;
-}
-
-@media(max-width: 480px) {
-    .container { padding-top: 45px; }
-    .cake-area { margin-top: 50px; }
-    .balloon { transform: scale(0.75); }
+    .cake-area {
+        margin-top: 2.2rem;
+    }
 }
 </style>
 </head>
-
-<!-- Background Music -->
-<audio id="bgMusic" loop>
-    <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- Music Button -->
-<button id="musicButton" onclick="toggleMusic()">
-    ♫ Play Music
-</button>
-
-<style>
-#musicButton {
-    position: fixed;
-    bottom: 22px;
-    right: 20px;
-    z-index: 9999;
-    padding: 12px 18px;
-    border: 1px solid #e8c0f5;
-    border-radius: 30px;
-    background: rgba(30, 15, 45, 0.85);
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-}
-
-#musicButton:hover {
-    background: #e8c0f5;
-    color: #26142f;
-}
-</style>
-
-<script>
-const music = document.getElementById("bgMusic");
-const musicButton = document.getElementById("musicButton");
-
-music.volume = 0.35;
-
-function toggleMusic() {
-    if (music.paused) {
-        music.play().then(() => {
-            musicButton.innerHTML = "♫ Music On";
-        }).catch(() => {
-            musicButton.innerHTML = "♫ Tap to Play";
-        });
-    } else {
-        music.pause();
-        musicButton.innerHTML = "♫ Play Music";
-    }
-}
-</script>
-
 <body>
 
+<div class="sky" id="sky"></div>
 <div id="lights"></div>
 <div id="confetti"></div>
 
-<main class="container">
+<main class="page">
 
-    <div class="eyebrow">A special day deserves a special moment</div>
+    <header>
+        <p class="eyebrow">A special day deserves a special moment</p>
+        <h1 class="title">Today, The Universe<br>Celebrates You! 🎉</h1>
+        <p class="lead">
+            A day filled with smiles, sweetness and beautiful memories.<br>
+            This little celebration is just for you.
+        </p>
+    </header>
 
-    <h1>Today, The Universe<br>Celebrates You! 🎉</h1>
-
-    <p class="subtitle">
-        A day filled with smiles, sweetness and beautiful memories.<br>
-        This little celebration is just for you.
-    </p>
-
-    <div class="cake-area" id="cake" onclick="blowCandles()">
-
+    <div class="cake-area" id="cake" role="button" tabindex="0" aria-label="Make a wish and blow out the candles">
         <div class="plate"></div>
-
         <div class="cake-bottom"></div>
         <div class="icing"></div>
         <div class="cake-top"></div>
         <div class="cherry"></div>
 
         <div class="candles">
-            <div class="candle">
-                <div class="flame"></div>
-                <div class="smoke">〰</div>
-            </div>
-
-            <div class="candle">
-                <div class="flame"></div>
-                <div class="smoke">〰</div>
-            </div>
-
-            <div class="candle">
-                <div class="flame"></div>
-                <div class="smoke">〰</div>
-            </div>
+            <div class="candle"><div class="flame"></div><div class="smoke">〰</div></div>
+            <div class="candle"><div class="flame"></div><div class="smoke">〰</div></div>
+            <div class="candle"><div class="flame"></div><div class="smoke">〰</div></div>
         </div>
-
     </div>
 
-    <p class="hint" id="hint">
-        ✦ MAKE A WISH & TAP THE CAKE ✦
-    </p>
+    <p class="hint" id="hint">✦ Make a wish &amp; tap the cake ✦</p>
 
-    <section class="celebration-message" id="celebrationMessage">
-
+    <section class="reveal" id="celebrationMessage">
         <h2>Happy Birthday! 🎂💖</h2>
-
-        <p>
-            May your days be filled with little reasons to smile,<br>
-            beautiful surprises and dreams that come true.<br><br>
-
-            Keep shining, keep laughing,<br>
-            and never stop being wonderfully you! 🌷
-        </p>
-
-        <a href="final-surprise.html" class="next">
-            One Last Surprise Awaits →
-        </a>
-
+        <p>May your days be filled with little reasons to smile, beautiful surprises and dreams that come true.</p>
+        <p style="margin-top: 1rem;">Keep shining, keep laughing, and never stop being wonderfully you! 🌷</p>
     </section>
+
+    <div class="btn-row">
+        <a href="letter.html" class="btn btn-ghost">← Back to the Letter</a>
+        <a href="final-surprise.html" class="btn btn-primary is-hidden" id="nextBtn">One Last Surprise Awaits →</a>
+    </div>
+
+    <p class="site-footer">A little celebration, a lot of heart ✦</p>
 
 </main>
 
-<div class="footer">
-    A LITTLE CELEBRATION, A LOT OF HEART ✦
-</div>
-
+<script src="assets/js/site.js"></script>
 <script>
-// Background lights
-const lights = document.getElementById("lights");
-
-for (let i = 0; i < 45; i++) {
-    const light = document.createElement("div");
-    light.className = "light";
-    light.style.left = Math.random() * 100 + "%";
-    light.style.top = Math.random() * 100 + "%";
-    light.style.animationDelay = Math.random() * 3 + "s";
-    lights.appendChild(light);
-}
-
-// Balloons
-const balloonColors = ["#ff7cae", "#a78bfa", "#65d6d0", "#ffd166", "#ff9b85"];
-
-balloonColors.forEach((color, i) => {
-    const balloon = document.createElement("div");
-    balloon.className = "balloon";
-    balloon.style.left = (5 + i * 20) + "%";
-    balloon.style.background = color;
-    balloon.style.animationDelay = (i * 2) + "s";
-    document.body.appendChild(balloon);
-});
-
-// Confetti
-function launchConfetti() {
-    const confetti = document.getElementById("confetti");
-    const colors = ["#ff8ab5", "#ffe082", "#b39ddb", "#80deea", "#ffffff"];
-
-    for (let i = 0; i < 120; i++) {
-        const piece = document.createElement("div");
-        piece.className = "confetti-piece";
-        piece.style.left = Math.random() * 100 + "%";
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (3 + Math.random() * 4) + "s";
-        piece.style.animationDelay = Math.random() * 2 + "s";
-
-        confetti.appendChild(piece);
-
-        setTimeout(() => piece.remove(), 8500);
+(function () {
+    /* Glowing lights */
+    var lights = document.getElementById('lights');
+    var lightCount = window.matchMedia('(max-width: 600px)').matches ? 18 : 36;
+    for (var i = 0; i < lightCount; i++) {
+        var l = document.createElement('span');
+        l.className = 'light';
+        l.style.left = Math.random() * 100 + '%';
+        l.style.top = Math.random() * 100 + '%';
+        l.style.animationDelay = Math.random() * 3 + 's';
+        lights.appendChild(l);
     }
-}
 
-// Blow candles
-let blown = false;
+    /* Balloons */
+    var balloonColors = ['#ff7cae', '#a78bfa', '#65d6d0', '#ffd166', '#ff9b85'];
+    balloonColors.forEach(function (color, i) {
+        var b = document.createElement('span');
+        b.className = 'balloon';
+        b.style.left = (5 + i * 20) + '%';
+        b.style.background = color;
+        b.style.animationDelay = (i * 2.5) + 's';
+        document.body.appendChild(b);
+    });
 
-function blowCandles() {
-    if (blown) return;
-    blown = true;
+    /* Confetti */
+    function launchConfetti() {
+        var box = document.getElementById('confetti');
+        var colors = ['#ff8ab5', '#ffe082', '#b39ddb', '#80deea', '#ffffff'];
+        var total = window.matchMedia('(max-width: 600px)').matches ? 70 : 120;
 
-    document.getElementById("cake").classList.add("blown");
-    document.getElementById("hint").style.display = "none";
+        for (var n = 0; n < total; n++) {
+            var piece = document.createElement('span');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.animationDuration = (3 + Math.random() * 4) + 's';
+            piece.style.animationDelay = Math.random() * 2 + 's';
+            box.appendChild(piece);
+            (function (el) { setTimeout(function () { el.remove(); }, 9000); })(piece);
+        }
+    }
 
-    launchConfetti();
+    /* Blow candles */
+    var cake = document.getElementById('cake');
+    var blown = false;
 
-    setTimeout(() => {
-        document.getElementById("celebrationMessage").classList.add("show");
-    }, 900);
-}
+    function blowCandles() {
+        if (blown) return;
+        blown = true;
+        cake.classList.add('blown');
+        cake.setAttribute('aria-label', 'Candles blown out');
+        document.getElementById('hint').classList.add('is-hidden');
+        launchConfetti();
+
+        setTimeout(function () {
+            var msg = document.getElementById('celebrationMessage');
+            msg.classList.add('show');
+            document.getElementById('nextBtn').classList.remove('is-hidden');
+            msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 900);
+    }
+
+    Site.onActivate(cake, blowCandles);
+})();
 </script>
-
 </body>
 </html>
